@@ -16,6 +16,17 @@ document.addEventListener("DOMContentLoaded", () => {
     let audioCtx;
     let soundBuffers = {};
 
+    let lastTouch = 0;
+
+    document.addEventListener('touchstart', function(e) {
+        const now = new Date().getTime();
+        if (now - lastTouch <= 300) {
+            e.preventDefault();
+        }
+        lastTouch = now;
+    }, { passive: false });
+
+
     async function loadSound(name, url) {
         if (!audioCtx) {
             audioCtx = new window.AudioContext();

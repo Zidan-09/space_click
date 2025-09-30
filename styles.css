@@ -1,7 +1,14 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
     height: 100vh;
+    min-height: 70vh;
+    max-height: 100vh;
+    background-color: black;
     background-image: url("assets/background.png");
     background-size: cover;
     background-position: center;
@@ -10,12 +17,14 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    touch-action: manipulation;
 }
 
 h2 {
     margin-bottom: 0.5rem;
     color: white;
     font-family: "Orbitron", sans-serif;
+    user-select: none;
 }
 
 #timer {
@@ -23,8 +32,10 @@ h2 {
 }
 
 .panel {
-    width: 70%;
-    height: 90%;
+    min-width: 80%;
+    min-height: 70%;
+    max-width: 95%;
+    max-height: 90%;
     background-image: url("assets/panel.png");
     background-size: cover;
     background-position: center;
@@ -32,8 +43,8 @@ h2 {
     border: 2px solid white;
     border-radius: 1rem;
     display: flex;
-    justify-content: start;
-    align-items: start;
+    justify-content: flex-start;
+    align-items: flex-start;
     margin-bottom: 1rem;
     position: relative;
 }
@@ -42,10 +53,15 @@ h2 {
     position: absolute;
     width: 7rem;
     height: 7rem;
+    -webkit-tap-highlight-color: transparent;
 }
 
 #object:hover {
     cursor: pointer;
+}
+
+#object:focus {
+    outline: none;
 }
 
 #play {
@@ -62,6 +78,9 @@ h2 {
     font-size: 3rem;
     font-family: "Orbitron", sans-serif;
     font-weight: bold;
+    user-select: none;
+    transition: transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 #play:hover {
@@ -75,15 +94,51 @@ h2 {
   left: 50%;      
   transform: translate(-50%, -50%);
   z-index: 9999;
-  color: yellow;
+  color: white;
   font-size: 5rem;
   padding: 20px;
   border-radius: 10px;
   display: none;
   font-family: "Orbitron", sans-serif;
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, 1);
+  text-shadow: 3px 3px 0 rgb(0, 0, 255);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #popup:hover, h2:hover {
     cursor: default;
+}
+
+@media (max-width: 1000px) {
+    body {
+        min-height: 90vh;
+        max-height: 93vh;
+    }
+
+    .panel {
+        min-width: 90%;
+        min-height: 60%;
+    }
+
+    h2 {
+        font-size: 2rem;
+        -webkit-text-stroke: 1px black;
+    }
+
+    #object {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    #play {
+        margin-top: 0.5rem;
+        width: 10rem;
+        height: 7rem;
+        font-size: 3rem;
+    }
+
+    #popup {
+        font-size: 3rem;
+        padding: 15px;
+    }
 }
