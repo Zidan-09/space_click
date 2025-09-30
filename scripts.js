@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let audioCtx;
     let soundBuffers = {};
 
+    let imageBuffers = {};
+
     let lastTouch = 0;
 
     document.addEventListener('touchstart', function(e) {
@@ -41,6 +43,22 @@ document.addEventListener("DOMContentLoaded", () => {
     loadSound("bip", "assets/sounds/bip.wav");
     loadSound("whistle", "assets/sounds/whistle.wav");
 
+    async function loadImage(name, url) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+                imageBuffers[name] = img;
+                resolve(img);
+            };
+            img.onerror = reject;
+            img.src = url;
+        });
+    }
+
+    for (let i = 1; i <= 5; i++) {
+        loadImage(`obj${i}`, `assets/object/${i}.png`);
+    }
+
     function playSound(name) {
         if (!soundBuffers[name]) return;
 
@@ -50,8 +68,12 @@ document.addEventListener("DOMContentLoaded", () => {
         source.start(0);
     }
 
-    function setObjectImage(url) {
-        object.style.backgroundImage = `url(${url})`;
+    function setObjectImage(name) {
+        const img = imageBuffers[name];
+
+        if (!img) return;
+
+        object.style.backgroundImage = `url(${img.src})`;
         object.style.backgroundSize = "cover";
         object.style.backgroundPosition = "center";
         object.style.backgroundRepeat = "no-repeat";
@@ -60,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function changeObject() {
         const index = Math.floor(Math.random() * 5) + 1;
 
-        setObjectImage(`assets/object/${index}.png`);
+        setObjectImage(`obj${index}`);
     }
 
 
